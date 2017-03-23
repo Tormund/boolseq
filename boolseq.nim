@@ -28,8 +28,10 @@ proc `[]=`*(bb: var BoolSeq, key: int, val: bool)=
         string(bb)[key div 8] = chunk.char
 
 proc setLen*(bb: var BoolSeq, newLen: int)=
-    while bb.len < newLen:
-        string(bb).add(0.char)
+    let tlen = newLen div 8 + (if newLen mod 8 > 0: 1 else: 0)
+    string(bb).setLen(tlen)
+    for i in newLen ..< bb.len:
+        bb[i] = false
 
 proc `$`*(bb: BoolSeq): string =
     result = ""
@@ -57,4 +59,12 @@ when isMainModule:
     assert(outbb[0])
     assert(not outbb[1])
     assert(startbb[0])
+
+    outbb.setLen(10)
+    assert(outbb[9])
+    assert(outbb.len == 16)
+    outbb.setLen(4)
+    assert(outbb.len == 8)
+
+    assert(not outbb[6])
 
