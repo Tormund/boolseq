@@ -39,6 +39,16 @@ proc `$`*(bb: BoolSeq): string =
         result.add(ch.int64.toBin(8))
         result.add(' ')
 
+proc toString*(bb: BoolSeq): string=
+    result = ""
+    for ch in string(bb):
+        result.add(ch)
+
+proc toIntSeq*(bb: BoolSeq): seq[int]=
+    result = @[]
+    for ch in string(bb):
+        result.add(ch.int)
+
 when isMainModule:
 
     let questsStats:string = $[0b0000_0001.char, 0b0000_0000.char]
