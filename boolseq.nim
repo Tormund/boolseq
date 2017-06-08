@@ -33,6 +33,8 @@ proc setLen*(bb: var BoolSeq, newLen: int)=
     for i in newLen ..< bb.len:
         bb[i] = false
 
+template fastCmp*(b1, b2: BoolSeq): int = cmp(b1.string, b2.string)
+
 proc `$`*(bb: BoolSeq): string =
     result = ""
     for ch in string(bb):
@@ -48,6 +50,8 @@ proc toIntSeq*(bb: BoolSeq): seq[int]=
     result = @[]
     for ch in string(bb):
         result.add(ch.int)
+
+template isNil*(b: BoolSeq): bool = b.string.isNil
 
 when isMainModule:
 
@@ -77,4 +81,3 @@ when isMainModule:
     assert(outbb.len == 8)
 
     assert(not outbb[6])
-
