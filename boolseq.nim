@@ -33,7 +33,12 @@ proc setLen*(bb: var BoolSeq, newLen: int)=
     for i in newLen ..< bb.len:
         bb[i] = false
 
-template fastCmp*(b1, b2: BoolSeq): int = cmp(b1.string, b2.string)
+proc `==`*(b1, b2: BoolSeq): bool =
+    if b1.string.len != b2.string.len: return false
+    for i in 0 ..< b1.string.len:
+        if b1.string[i] != b2.string[i]: return false
+    # TODO: Warning! This checks last bits that may be not part of the seq
+    return true
 
 proc `$`*(bb: BoolSeq): string =
     result = ""
@@ -41,10 +46,8 @@ proc `$`*(bb: BoolSeq): string =
         result.add(ch.int64.toBin(8))
         result.add(' ')
 
-proc toString*(bb: BoolSeq): string=
-    result = ""
-    for ch in string(bb):
-        result.add(ch)
+template toString*(bb: BoolSeq): string {.deprecated.}=
+    bb.string
 
 proc toIntSeq*(bb: BoolSeq): seq[int]=
     result = @[]
