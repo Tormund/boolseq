@@ -29,8 +29,9 @@ proc `[]=`*(bb: var BoolSeq, key: int, val: bool)=
 
 proc setLen*(bb: var BoolSeq, newLen: int)=
     let tlen = newLen div 8 + (if newLen mod 8 > 0: 1 else: 0)
+    let oldLen = bb.len
     string(bb).setLen(tlen)
-    for i in newLen ..< bb.len:
+    for i in oldLen ..< bb.len:
         bb[i] = false
 
 proc `==`*(b1, b2: BoolSeq): bool =
