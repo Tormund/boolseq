@@ -5,6 +5,12 @@ type BoolSeq* = distinct string
 proc newBoolSeq*(buff: string = ""): BoolSeq=
     result = buff.BoolSeq
 
+proc newBoolSeq*(buff: seq[int]): BoolSeq =
+    var b = ""
+    for c in buff:
+        b.add(c.char)
+    result = newBoolSeq(b)
+
 proc stateAtPos(chunk: int, p: int): bool=
     result = ((chunk shr p) and 1).bool
 
